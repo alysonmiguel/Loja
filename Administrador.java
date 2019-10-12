@@ -13,9 +13,8 @@ public class Administrador extends Funcionario {
 
     private double horas;
 
-    public Administrador(double horas, int matricula, double salario, String nome, String cpf) {
+    public Administrador(int matricula, double salario, String nome, String cpf) {
         super(matricula, salario, nome, cpf);
-        this.horas = horas;
     }
 
     public double getHoras() {
@@ -34,7 +33,8 @@ public class Administrador extends Funcionario {
     
     @Override
     public double calcularPagamento() {
-        return 23.3;
+         setSalario(getSalario() + horas * getSalario());
+        return getSalario();
     }
 
 }

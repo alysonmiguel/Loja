@@ -13,9 +13,8 @@ public class Vendedor extends Funcionario{
     
     private double vendas;
 
-    public Vendedor(double vendas, int matricula, double salario, String nome, String cpf) {
+    public Vendedor(int matricula, double salario, String nome, String cpf) {
         super(matricula, salario, nome, cpf);
-        this.vendas = vendas;
     }
 
     public double getVendas() {
@@ -31,11 +30,12 @@ public class Vendedor extends Funcionario{
         return "Vendedor{" + "vendas=" + vendas + '}';
     }
 
-
-    @Override
+     @Override
      public double calcularPagamento(){
-        return ( vendas * 0.1);
+         setSalario(getSalario() + vendas * getSalario());
+        return getSalario();
     }  
+
 
  
 }
