@@ -27,13 +27,13 @@ public class Administrador extends Funcionario {
 
     @Override
     public String toString() {
-        return "Administrador{" + "horas=" + horas + '}';
+        return "Função: Administrador \n" + super.toString()+ "\nHoras=" + horas;
     }
 
     
     @Override
     public double calcularPagamento() {
-         setSalario(getSalario() + horas * getSalario());
+         setSalario(getSalario() + (getSalario()* horas/100) );
         return getSalario();
     }
 

@@ -28,7 +28,7 @@ public class Cliente extends Pessoa{
 
     @Override
     public String toString() {
-        return "Cliente{" + "codigo=" + codigo + '}';
+        return "Função: Cliente \n" + "\nCodigo = " + codigo;
     }
     
     

@@ -21,14 +21,16 @@ public class Loja {
         int op;
         do {
 
-            System.out.println("\n\n\tLoja "
-                    + "1 - Cadastrar pessoas "
-                    + "2 - Remover pessoa "
-                    + "3 - Buscar pessoa "
-                    + "4 - Adicionar Produtividade "
-                    + "5 - Gerar Folha de Pagamento "
-                    + "6 - Sair ");
+            System.out.println("\n\tLoja "
+                    + "\n1 - Cadastrar pessoas "
+                    + "\n2 - Remover pessoa "
+                    + "\n3 - Buscar pessoa "
+                    + "\n4 - Adicionar Produtividade "
+                    + "\n5 - Gerar Folha de Pagamento "
+                    + "\n6 - Sair ");
             op = entrada.nextInt();
+
+            entrada.nextLine(); // Limpa o buffer
 
             switch (op) {
                 case 1:
@@ -41,13 +43,15 @@ public class Loja {
                     buscar();
                     break;
                 case 4:
+                    adicionarProdutividade();
                     break;
                 case 5:
+                    geraFolhaPagamento();
                     break;
                 case 6:
                     System.out.println("Saindo...");
                     break;
-           
+
                 default:
                     System.out.println("Opção inválida!");
                     break;
@@ -61,47 +65,45 @@ public class Loja {
         double salario = 0;
         String nome = null, cpf = null;
         Pessoa p = null;
-        do {
-            System.out.println("\n\tCadastrar "
-                    + "1-Cliente "
-                    + "2-Administrativo"
-                    + "3-Vendedor "
-                    + "4-Voltar");
-            op = entrada.nextInt();
+        System.out.println("\n\tCadastrar "
+                + "\n1-Cliente "
+                + "\n2-Administrador"
+                + "\n3-Vendedor "
+                + "\n4-Voltar");
+        op = entrada.nextInt();
 
-            if (op > 0 && op < 6) {
-                System.out.print("Insira os dados do funcionario"
-                        + "Nome: ");
-                nome = entrada.nextLine();
-                System.out.print("CPF: ");
-                cpf = entrada.nextLine();
-                if (op == 2 || op == 3) {
-                    System.out.print("Matrícula: ");
-                    numeroMatricula = entrada.nextInt();
-                    System.out.print("Salário: ");
-                    salario = entrada.nextDouble();
-                }
+        if (op > 0 && op < 4) {
+            System.out.print("Insira os dados do funcionario\n"
+                    + "Nome: ");
+            nome = entrada.next();
+            System.out.print("CPF: ");
+            cpf = entrada.next();
+            if (op == 2 || op == 3) {
+                System.out.print("Matrícula: ");
+                numeroMatricula = entrada.nextInt();
+                System.out.print("Salário: ");
+                salario = entrada.nextDouble();
             }
+        }
 
-            switch (op) {
-                case 1:
-                    System.out.println("Insira o código do cliente: ");
-                    lista.add(new Cliente(entrada.next(), nome, cpf));
-                    break;
-                case 2:
-                    lista.add(new Administrador(numeroMatricula, salario, nome, cpf));
-                    break;
-                case 3:
-                    lista.add(new Vendedor(numeroMatricula, salario, nome, cpf));
-                    break;
-                case 4:
-                    System.out.println("Saindo...");
-                    break;
-                default:
-                    System.out.println("Opção inválida!");
-                    break;
-            }
-        } while (op != 4);
+        switch (op) {
+            case 1:
+                System.out.println("Insira o código do cliente: ");
+                lista.add(new Cliente(entrada.next(), nome, cpf));
+                break;
+            case 2:
+                lista.add(new Administrador(numeroMatricula, salario, nome, cpf));
+                break;
+            case 3:
+                lista.add(new Vendedor(numeroMatricula, salario, nome, cpf));
+                break;
+            case 4:
+                System.out.println("Saindo...");
+                break;
+            default:
+                System.out.println("Opção inválida!");
+                break;
+        }
     }
 
     private void remover() {
@@ -152,15 +154,45 @@ public class Loja {
     }
 
     private void listar() {
-
+        for (Pessoa p : lista) {
+            if (p instanceof Funcionario) {
+                if (p instanceof Administrador) {
+                    System.out.println(((Administrador) p).toString());
+                } else {
+                    System.out.println(((Vendedor) p).toString());
+                }
+            } else {
+                System.out.println(((Cliente) p).toString());
+            }
+        }
     }
 
-    private void adicionarProdutivadade() {
+    private void adicionarProdutividade() {
+         System.out.println("Por favor informe um CPF");
+        Pessoa p = buscar(entrada.nextLine());
 
+        if (p != null) {
+            if (p instanceof Funcionario) {
+                if (p instanceof Administrador) {
+                    System.out.println("\nInforme a quantidade de horas extra do funcionário: ");
+                    ((Administrador) p).setHoras(entrada.nextDouble());
+                } else {
+                    System.out.println("\nInforme o total de vendas do funcionário: ");
+                    ((Vendedor) p).setVendas(entrada.nextDouble());
+                }
+            }
+        }
     }
 
-    private void gerarFolhaPagamento() {
-
+    private void geraFolhaPagamento() {
+        for (Pessoa p : lista) {
+            if (p instanceof Administrador) {
+                ((Administrador) p).calcularPagamento();
+                System.out.println(((Administrador) p).toString());
+            } else if (p instanceof Vendedor) {
+                ((Vendedor) p).calcularPagamento();
+                System.out.println(((Vendedor) p).toString());
+            }
+        }
     }
-
 }

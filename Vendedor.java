@@ -22,17 +22,17 @@ public class Vendedor extends Funcionario{
     }
 
     public void setVendas(double vendas) {
-        this.vendas = vendas;
+        this.vendas = vendas * 0.1;
     }
 
     @Override
     public String toString() {
-        return "Vendedor{" + "vendas=" + vendas + '}';
+        return "Função: Vendedor \n" + super.toString();
     }
 
      @Override
      public double calcularPagamento(){
-         setSalario(getSalario() + vendas * getSalario());
+         setSalario(getSalario() + vendas);
         return getSalario();
     }  
 
